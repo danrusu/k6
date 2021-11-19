@@ -1,0 +1,23 @@
+{
+  "name": "k6",
+  "version": "1.0.0",
+  "description": "POC: k6 performance testing",
+  "main": "calculate.js",
+  "scripts": {
+    "test": "k6 run calcuate.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danrusu/k6.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danrusu/k6/issues"
+  },
+  "homepage": "https://github.com/danrusu/k6#readme",
+  "devDependencies": {
+    "@types/k6": "^0.34.3"
+  }
+}
