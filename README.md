@@ -1,5 +1,4 @@
-# k6
-POC: k6 performance testing 
+# POC: k6 performance testing 
 
 
 # [K6 instalation](https://k6.io/docs/getting-started/installation/)
