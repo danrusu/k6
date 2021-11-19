@@ -1,7 +1,7 @@
 # POC: k6 performance testing 
 
 
-# [K6 instalation](https://k6.io/docs/getting-started/installation/)
+# [k6 instalation](https://k6.io/docs/getting-started/installation/)
 
 # Test execution
 
