@@ -29,6 +29,16 @@ const isResponseValid = res =>
     },
   );
 
+const logResponse = res => {
+  console.log(
+    `@@@@@ Response metrics @@@@@\n ${JSON.stringify(
+      res,
+      null,
+      2,
+    )} \n@@@@@@@@@@`,
+  );
+};
+
 export const options = {
   //httpDebug: 'full',
   vus: 2,
@@ -40,13 +50,7 @@ export default function () {
     'http://qatools.ro/api/calculate.php?firstNumber=5&secondNumber=2&operation=2',
   );
 
-  console.log(
-    `@@@@@ Response metrics @@@@@\n ${JSON.stringify(
-      res,
-      null,
-      2,
-    )} \n@@@@@@@@@@`,
-  );
+  logResponse(res);
 
   myTrend.add(res.timings.waiting);
 
