@@ -22,7 +22,6 @@ const isResponseValid = res =>
       'status was 200': r => r.status == 200,
       'valid body': r =>
         expect(JSON.parse(r.body)).to.deep.equal(EXPECTED_CALCULATE_RESPONSE),
-      cp,
     },
     {
       myTag: 'VALID_RESPONSE',
