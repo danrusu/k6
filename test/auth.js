@@ -1,6 +1,6 @@
 import http from 'k6/http';
 import { check, fail, group, sleep } from 'k6';
-import { Trend } from 'k6/metrics';
+import { Trend, Counter } from 'k6/metrics';
 
 import { htmlReport } from 'https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js';
 import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
@@ -10,9 +10,12 @@ import { expect } from '../node_modules/chai/chai.js';
 
 const EXPECTED_CARS = ['Ford Fiesta', 'BMW X5', 'Porsche 911', 'Lamborghini'];
 
-// Custom Trends: Time To First Byte
+// Custom Metrics
+// Time To First Byte
 const ttfbLoginTrend = new Trend('LOGIN_TTFB');
 const ttfbCarsTrend = new Trend('CARS_TTFB');
+// Requests count
+const totalRequests = new Counter('TOTAL_REQUESTS');
 
 const isResponseValid = (response, expectedResponseBody) =>
   check(
@@ -76,7 +79,9 @@ export default function () {
   let accessToken;
   group('LOGIN', () => {
     const loginResponse = login('tester', 'passw0rd');
+
     ttfbLoginTrend.add(loginResponse.timings.waiting);
+    totalRequests.add(1);
 
     accessToken = loginResponse.headers['Access-Token'];
 
@@ -87,7 +92,9 @@ export default function () {
 
   group('CARS', () => {
     const carsResponse = getCars(accessToken);
+
     ttfbCarsTrend.add(carsResponse.timings.waiting);
+    totalRequests.add(1);
 
     validateCars(carsResponse);
 
