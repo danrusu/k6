@@ -4,7 +4,7 @@
   "description": "POC: k6 performance testing",
   "main": "calculate.js",
   "scripts": {
-    "test": "k6 run calculate.js"
+    "test": "k6 run auth.js"
   },
   "repository": {
     "type": "git",
