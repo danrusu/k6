@@ -1,11 +1,12 @@
 import http from 'k6/http';
-import { check, fail, group } from 'k6';
+import { check, fail, group, sleep } from 'k6';
 import { Trend } from 'k6/metrics';
 
 import { htmlReport } from 'https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js';
 import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 
-import { expect } from 'https://www.chaijs.com/chai.js';
+import { expect } from '../node_modules/chai/chai.js';
+//import { expect } from 'https://www.chaijs.com/chai.js';
 
 const EXPECTED_CARS = ['Ford Fiesta', 'BMW X5', 'Porsche 911', 'Lamborghini'];
 
@@ -67,8 +68,8 @@ const validateCars = carsResponse => {
 
 export const options = {
   //httpDebug: 'full',
-  vus: 2,
-  iterations: 2,
+  vus: 10,
+  iterations: 10,
 };
 
 export default function () {
@@ -92,6 +93,8 @@ export default function () {
 
     // logResponse(carsResponse);
   });
+
+  sleep(1);
 }
 
 export function handleSummary(data) {
