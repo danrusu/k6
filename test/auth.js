@@ -1,9 +1,13 @@
+// 1. INIT code
 import http from 'k6/http';
 import { check, fail, group, sleep } from 'k6';
 import { Trend, Counter } from 'k6/metrics';
 
 import { htmlReport } from 'https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js';
-import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
+import {
+  textSummary,
+  jUnit,
+} from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 
 import { expect } from '../node_modules/chai/chai.js';
 //import { expect } from 'https://www.chaijs.com/chai.js';
@@ -67,7 +71,7 @@ const validateCars = carsResponse => {
   }
 };
 
-// ***** EXPORTS *****
+//***** k6 EXPORTS *****
 
 export const options = {
   //httpDebug: 'full',
@@ -75,7 +79,12 @@ export const options = {
   iterations: 10,
 };
 
+export function setup() {
+  // 2. SETUP code
+}
+
 export default function () {
+  // 3. VU code
   let accessToken;
   group('LOGIN', () => {
     const loginResponse = login('tester', 'passw0rd');
@@ -106,7 +115,13 @@ export default function () {
 
 export function handleSummary(data) {
   return {
-    'reports/summary.html': htmlReport(data),
     stdout: textSummary(data, { indent: ' ', enableColors: true }),
+    'reports/summary.html': htmlReport(data),
+    'reports/junit.xml': jUnit(data),
+    'reports/report.json': JSON.stringify(data, null, 2),
   };
+}
+
+export function teardown(data) {
+  // 4. TEARDOWN code
 }
