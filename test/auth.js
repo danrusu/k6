@@ -113,6 +113,10 @@ export default function () {
   sleep(1);
 }
 
+export function teardown(data) {
+  // 4. TEARDOWN code
+}
+
 export function handleSummary(data) {
   return {
     stdout: textSummary(data, { indent: ' ', enableColors: true }),
@@ -120,8 +124,4 @@ export function handleSummary(data) {
     'reports/junit.xml': jUnit(data),
     'reports/report.json': JSON.stringify(data, null, 2),
   };
-}
-
-export function teardown(data) {
-  // 4. TEARDOWN code
 }
