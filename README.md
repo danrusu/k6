@@ -1,13 +1,20 @@
-# POC: k6 performance testing 
+## POC: k6 performance testing 
 
+### [k6 instalation](https://k6.io/docs/getting-started/installation/)
 
-# [k6 instalation](https://k6.io/docs/getting-started/installation/)
-
-# Test execution
-
+### Setup
 ```bash
-k6 run calculate.js
-
+git clone https://github.com/danrusu/k6.git
+cd k6
+npm install
 ```
 
-# [Reports](./reports)
+### Test execution
+
+```bash
+npm test
+# OR
+k6 run test/auth.js
+```
+
+### [Reports](./reports)
