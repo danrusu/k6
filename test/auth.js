@@ -3,21 +3,17 @@ import http from 'k6/http';
 import { check, fail, group, sleep } from 'k6';
 import { Trend, Counter } from 'k6/metrics';
 
-import { htmlReport } from 'https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js';
-import {
-  textSummary,
-  jUnit,
-} from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
+import defaultReport from '../reporters/defaultReport.js';
 
 import { expect } from '../node_modules/chai/chai.js';
 //import { expect } from 'https://www.chaijs.com/chai.js';
 
+const TEST_NAME = 'CARS';
 const EXPECTED_CARS = ['Ford Fiesta', 'BMW X5', 'Porsche 911', 'Lamborghini'];
 
 // Custom Metrics
 // Time To First Byte
-const ttfbLoginTrend = new Trend('LOGIN_TTFB');
-const ttfbCarsTrend = new Trend('CARS_TTFB');
+const ttfbCarsTrend = new Trend(`${TEST_NAME}_TTFB`);
 // Requests count
 const totalRequests = new Counter('TOTAL_REQUESTS');
 
@@ -33,16 +29,6 @@ const isResponseValid = (response, expectedResponseBody) =>
       myTag: 'VALID_RESPONSE',
     },
   );
-
-const logResponse = response => {
-  console.log(
-    `@@@@@ Response metrics @@@@@\n ${JSON.stringify(
-      response,
-      null,
-      2,
-    )} \n@@@@@@@@@@`,
-  );
-};
 
 const login = (username, password) =>
   http.post(
@@ -80,25 +66,15 @@ export const options = {
 };
 
 export function setup() {
-  // 2. SETUP code
+  const loginResponse = login('tester', 'passw0rd');
+  totalRequests.add(1);
+  validateLogin(loginResponse);
+
+  return loginResponse.headers['Access-Token'];
 }
 
-export default function () {
+export default function (accessToken) {
   // 3. VU code
-  let accessToken;
-  group('LOGIN', () => {
-    const loginResponse = login('tester', 'passw0rd');
-
-    ttfbLoginTrend.add(loginResponse.timings.waiting);
-    totalRequests.add(1);
-
-    accessToken = loginResponse.headers['Access-Token'];
-
-    validateLogin(loginResponse);
-
-    // logResponse(loginResponse);
-  });
-
   group('CARS', () => {
     const carsResponse = getCars(accessToken);
 
@@ -118,10 +94,5 @@ export function teardown(data) {
 }
 
 export function handleSummary(data) {
-  return {
-    stdout: textSummary(data, { indent: ' ', enableColors: true }),
-    'reports/summary.html': htmlReport(data),
-    'reports/junit.xml': jUnit(data),
-    'reports/report.json': JSON.stringify(data, null, 2),
-  };
+  return defaultReport(data, TEST_NAME);
 }
