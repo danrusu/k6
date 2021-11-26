@@ -23,7 +23,7 @@ jobs:
         run: k6 run ./test/carsTest.js
 
       - name: Publish HTML report
-          uses: actions/uplead-artifact@v1
+          uses: actions/upload-artifact@v1
           if: always()
           with:
             name: K6 cars test
