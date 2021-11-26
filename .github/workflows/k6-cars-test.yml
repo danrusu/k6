@@ -1,8 +1,6 @@
 name: k6 LOGIN test
 
-on:
-  repository_dispatch:
-  name: cars test
+on: repository_dispatch
 
 jobs:
   k6_local_login_test:
@@ -21,3 +19,10 @@ jobs:
 
       - name: k6 LOGIN test
         run: k6 run ./test/carsTest.js
+
+      - name: Publish HTML report
+          uses: actions/upload-artifact@v1
+          if: always()
+          with:
+            name: K6 cars test
+            path: reports/CARS.html
