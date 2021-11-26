@@ -21,8 +21,8 @@ jobs:
         run: k6 run ./test/carsTest.js
 
       - name: Publish HTML report
-          uses: actions/upload-artifact@v1
+          uses: actions/upload-artifact@v2
           if: always()
           with:
-            name: K6 cars test
+            name: CARS.performace.report
             path: reports/CARS.html
