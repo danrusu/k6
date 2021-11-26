@@ -14,5 +14,8 @@ jobs:
       - name: Install k6 by homebrew
         run: brew install k6
 
+      - name: Install Node.js dependencies
+        run: npm install
+
       - name: k6 LOGIN test
-        run: which npm
+        run: k6 run ./test/carsTest.js
