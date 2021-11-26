@@ -1,12 +1,6 @@
-name: K6 LOGIN performance test
+name: k6 LOGIN test
 
-on:
-  workflow_dispatch:
-    inputs:
-      name:
-        description: 'K6 performance test'
-        required: true
-        default: 'test'
+on: repository_dispatch
 
 jobs:
   k6_local_login_test:
@@ -20,5 +14,5 @@ jobs:
       - name: Install k6 by homebrew
         run: brew install k6
 
-      - name: Local k6 LOGIN test
+      - name: k6 LOGIN test
         run: k6 run ./k6/test/loginTest.js
