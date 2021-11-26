@@ -15,7 +15,7 @@ npm install
 ```bash
 npm test
 # OR
-k6 run test/auth.js
+k6 run test/carsTest.js
 ```
 
 ### [Reports](./reports)

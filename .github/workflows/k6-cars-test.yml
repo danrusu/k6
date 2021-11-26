@@ -15,4 +15,4 @@ jobs:
         run: brew install k6
 
       - name: k6 LOGIN test
-        run: k6 run ./test/loginTest.js
+        run: k6 run .k6//test/carsTest.js
