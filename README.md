@@ -1,8 +1,9 @@
-## POC: k6 performance testing 
+## POC: k6 performance testing
 
 ### [k6 instalation](https://k6.io/docs/getting-started/installation/)
 
 ### Setup
+
 ```bash
 git clone https://github.com/danrusu/k6.git
 cd k6
