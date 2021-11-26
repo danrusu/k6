@@ -1,6 +1,8 @@
 name: k6 LOGIN test
 
-on: repository_dispatch
+on:
+  repository_dispatch:
+  name: cars test
 
 jobs:
   k6_local_login_test:
