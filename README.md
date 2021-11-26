@@ -1,4 +1,4 @@
-## POC: k6 performance testing
+# k6 performance testing POC
 
 ### [k6 instalation](https://k6.io/docs/getting-started/installation/)
 
@@ -19,3 +19,7 @@ k6 run test/carsTest.js
 ```
 
 ### [Reports](./reports)
+
+### [Workflows](./.github/workflows)
+
+### [VSCode Github Actions Plugin](https://marketplace.visualstudio.com/items?itemName=cschleiden.vscode-github-actions)
