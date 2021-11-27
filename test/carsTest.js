@@ -9,14 +9,15 @@ import { expect } from '../node_modules/chai/chai.js';
 //import { expect } from 'https://www.chaijs.com/chai.js';
 
 const testEnvironment = __ENV.environment;
-console.log(`TEST ENVIRONMENT: ${testEnvironment}`);
 
 const TEST_NAME = 'CARS';
 const EXPECTED_CARS = ['Ford Fiesta', 'BMW X5', 'Porsche 911', 'Lamborghini'];
 
 // Custom Metrics
 // Time To First Byte
-const ttfbCarsTrend = new Trend(`${TEST_NAME}_TTFB`);
+const ttfbCarsTrend = new Trend(
+  `${testEnvironment.toUpperCase()}_${TEST_NAME}_TTFB`,
+);
 // Requests count
 const totalRequests = new Counter('TOTAL_REQUESTS');
 
