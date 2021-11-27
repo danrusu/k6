@@ -39,10 +39,13 @@ const login = (username, password) =>
     `https://qatools.ro/api/login.php?username=${username}&password=${password}`,
   );
 
-const getCars = accessToken =>
-  http.get(`https://qatools.ro/api/cars`, {
+const getCars = accessToken => {
+  const urlEnv =
+    __ENV.environment === 'production' ? '' : `${__ENV.environment}/`;
+  return http.get(`https://qatools.ro/api/${urlEnv}cars`, {
     headers: { 'Access-Token': accessToken },
   });
+};
 
 const validateLogin = loginResponse => {
   if (!isResponseValid(loginResponse, { status: 'authorized' })) {
