@@ -25,7 +25,7 @@ jobs:
 
       - name: k6 LOGIN test
         run: |
-          echo "Running k6 performance tests against: ${{ github.event.inputs.environment }}""
+          echo "Running k6 performance tests against: ${{ github.event.inputs.environment }}"
           k6 run ./test/carsTest.js
 
       - name: Publish HTML report
