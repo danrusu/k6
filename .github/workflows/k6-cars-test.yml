@@ -1,4 +1,4 @@
-name: k6 CARS test ${{ github.event.inputs.environment }}
+name: k6 CARS test
 
 on:
   workflow_dispatch:
@@ -32,5 +32,5 @@ jobs:
         uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: CARS.performace.report
+          name: 'CARS.performace.${{ github.event.inputs.environment }}.report'
           path: reports/CARS.html
