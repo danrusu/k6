@@ -1,6 +1,6 @@
 # k6 performance testing POC
 
-![Cars Performance](https://github.com/danrusu/k6/actions/workflows/k6-cars-test/badge.svg)
+![Cars Performance](https://github.com/danrusu/k6/actions/workflows/k6-cars-test.yml/badge.svg)
 
 ### [k6 instalation](https://k6.io/docs/getting-started/installation/)
 
