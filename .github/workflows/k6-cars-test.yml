@@ -1,11 +1,11 @@
-name: k6 LOGIN test
+name: k6 CARS test ${{ github.event.inputs.environment }}
 
 on:
   workflow_dispatch:
     ref: refs/heads/main
     inputs:
       environment:
-        description: 'environment'
+        description: 'test environment'
         required: true
         default: 'production'
 jobs:
