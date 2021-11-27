@@ -8,6 +8,9 @@ import defaultReport from '../reporters/defaultReport.js';
 import { expect } from '../node_modules/chai/chai.js';
 //import { expect } from 'https://www.chaijs.com/chai.js';
 
+const testEnvironment = __ENV.environment;
+console.log(`TEST ENVIRONMENT: ${testEnvironment}`);
+
 const TEST_NAME = 'CARS';
 const EXPECTED_CARS = ['Ford Fiesta', 'BMW X5', 'Porsche 911', 'Lamborghini'];
 
