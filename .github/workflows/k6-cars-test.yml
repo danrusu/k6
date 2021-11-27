@@ -1,6 +1,6 @@
 name: k6 LOGIN test
 
-on: repository_dispatch
+on: workflow_dispatch
 
 jobs:
   k6_local_login_test:
