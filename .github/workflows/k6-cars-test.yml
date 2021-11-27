@@ -24,9 +24,13 @@ jobs:
         run: npm install
 
       - name: k6 LOGIN test
+        env:
+          environment: ${{ github.event.inputs.environment }}
+          username: ${{ secrets.username }}
+          password: ${{ secrets.password }}
         run: |
           echo "Running k6 performance tests against: ${{ github.event.inputs.environment }}"
-          k6 run -e environment="${{ github.event.inputs.environment }}" ./test/carsTest.js
+          k6 run ./test/carsTest.js
 
       - name: Publish HTML report
         uses: actions/upload-artifact@v2

@@ -26,8 +26,8 @@ const isResponseValid = (response, expectedResponseBody) =>
     response,
     {
       'status was 200': r => r.status == 200,
-      'valid body': r =>
-        expect(JSON.parse(r.body)).to.deep.equal(expectedResponseBody),
+      // 'valid body': r =>
+      //   expect(JSON.parse(r.body)).to.deep.equal(expectedResponseBody),
     },
     {
       myTag: 'VALID_RESPONSE',
@@ -73,7 +73,7 @@ export const options = {
 };
 
 export function setup() {
-  const loginResponse = login('tester', 'passw0rd');
+  const loginResponse = login(__ENV.username, __ENV.password);
   totalRequests.add(1);
   validateLogin(loginResponse);
 
