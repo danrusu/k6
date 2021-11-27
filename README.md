@@ -17,7 +17,7 @@ npm install
 ```bash
 npm test
 # OR
-k6 run test/carsTest.js
+k6 run -e environment=production -e username=tester -e password=passw0rd test/carsTest.js
 ```
 
 ### [Reports](./reports)
