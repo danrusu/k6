@@ -10,7 +10,7 @@ on:
         default: 'production'
 jobs:
   k6_cars_test:
-    name: 'k6 CARS test on macos - ${{ github.event.inputs.environment }} environment'
+    name: 'k6 CARS test - ${{ github.event.inputs.environment }}'
     runs-on: macos-latest
 
     steps:
