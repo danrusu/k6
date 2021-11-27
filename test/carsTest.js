@@ -6,6 +6,7 @@ import { Trend, Counter } from 'k6/metrics';
 import defaultReport from '../reporters/defaultReport.js';
 
 import { expect } from '../node_modules/chai/chai.js';
+import chaiCheck from '../util/chaiCheck.js';
 //import { expect } from 'https://www.chaijs.com/chai.js';
 
 const testEnvironment = __ENV.environment;
@@ -22,17 +23,13 @@ const ttfbCarsTrend = new Trend(
 const totalRequests = new Counter('TOTAL_REQUESTS');
 
 const isResponseValid = (response, expectedResponseBody) =>
-  check(
-    response,
-    {
-      'status was 200': r => r.status == 200,
-      // 'valid body': r =>
-      //   expect(JSON.parse(r.body)).to.deep.equal(expectedResponseBody),
-    },
-    {
-      myTag: 'VALID_RESPONSE',
-    },
-  );
+  check(response, {
+    'status was 200': r => r.status == 200,
+    'valid body': r =>
+      chaiCheck(() =>
+        expect(JSON.parse(r.body)).to.deep.equal(expectedResponseBody),
+      ),
+  });
 
 const login = (username, password) =>
   http.post(
