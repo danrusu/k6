@@ -1,10 +1,16 @@
 name: k6 LOGIN test
 
-on: workflow_dispatch
-
+on:
+  workflow_dispatch:
+    ref: refs/heads/main
+    inputs:
+      environment:
+        description: 'environment'
+        required: true
+        default: 'production'
 jobs:
-  k6_local_login_test:
-    name: k6 local test on macos
+  k6_cars_test:
+    name: k6 cars test on macos
     runs-on: macos-latest
 
     steps:
@@ -18,7 +24,9 @@ jobs:
         run: npm install
 
       - name: k6 LOGIN test
-        run: k6 run ./test/carsTest.js
+        run: |
+          echo "Running k6 performance tests against: ${{ github.event.inputs.environment }}""
+          k6 run ./test/carsTest.js
 
       - name: Publish HTML report
         uses: actions/upload-artifact@v2
