@@ -2,9 +2,9 @@
   "name": "k6",
   "version": "1.0.0",
   "description": "POC: k6 performance testing",
-  "main": "calculate.js",
+  "main": "",
   "scripts": {
-    "test": "k6 run test/auth.js"
+    "test": "k6 run -e environment=production -e username=tester -e password=passw0rd test/carsTest.js"
   },
   "repository": {
     "type": "git",
