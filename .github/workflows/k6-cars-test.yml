@@ -5,12 +5,12 @@ on:
     ref: refs/heads/main
     inputs:
       environment:
-        description: 'test environment'
+        description: test environment
         required: true
-        default: 'production'
+        default: production
 jobs:
   k6_cars_test:
-    name: 'k6 CARS test - ${{ github.event.inputs.environment }}'
+    name: k6 CARS test [${{ github.event.inputs.environment }}]
     runs-on: macos-latest
 
     steps:
@@ -36,5 +36,5 @@ jobs:
         uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: 'CARS.performace.${{ github.event.inputs.environment }}.report'
+          name: CARS.performace.${{ github.event.inputs.environment }}.report
           path: reports/CARS.html
