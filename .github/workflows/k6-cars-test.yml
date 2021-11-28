@@ -1,0 +1,40 @@
+name: k6 CARS test
+
+on:
+  workflow_dispatch:
+    ref: refs/heads/main
+    inputs:
+      environment:
+        description: 'test environment'
+        required: true
+        default: 'production'
+jobs:
+  k6_cars_test:
+    name: 'k6 CARS test - ${{ github.event.inputs.environment }}'
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Install k6 by homebrew
+        run: brew install k6
+
+      - name: Install Node.js dependencies
+        run: npm install
+
+      - name: k6 LOGIN test
+        env:
+          environment: ${{ github.event.inputs.environment }}
+          username: ${{ secrets.username }}
+          password: ${{ secrets.password }}
+        run: |
+          echo "Running k6 performance tests against: ${{ github.event.inputs.environment }}"
+          k6 run ./test/carsTest.js
+
+      - name: Publish HTML report
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: 'CARS.performace.${{ github.event.inputs.environment }}.report'
+          path: reports/CARS.html

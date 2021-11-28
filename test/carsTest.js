@@ -6,39 +6,43 @@ import { Trend, Counter } from 'k6/metrics';
 import defaultReport from '../reporters/defaultReport.js';
 
 import { expect } from '../node_modules/chai/chai.js';
+import chaiCheck from '../util/chaiCheck.js';
 //import { expect } from 'https://www.chaijs.com/chai.js';
+
+const testEnvironment = __ENV.environment;
 
 const TEST_NAME = 'CARS';
 const EXPECTED_CARS = ['Ford Fiesta', 'BMW X5', 'Porsche 911', 'Lamborghini'];
 
 // Custom Metrics
 // Time To First Byte
-const ttfbCarsTrend = new Trend(`${TEST_NAME}_TTFB`);
+const ttfbCarsTrend = new Trend(
+  `${testEnvironment.toUpperCase()}_${TEST_NAME}_TTFB`,
+);
 // Requests count
 const totalRequests = new Counter('TOTAL_REQUESTS');
 
 const isResponseValid = (response, expectedResponseBody) =>
-  check(
-    response,
-    {
-      'status was 200': r => r.status == 200,
-      'valid body': r =>
+  check(response, {
+    'status was 200': r => r.status == 200,
+    'valid body': r =>
+      chaiCheck(() =>
         expect(JSON.parse(r.body)).to.deep.equal(expectedResponseBody),
-    },
-    {
-      myTag: 'VALID_RESPONSE',
-    },
-  );
+      ),
+  });
 
 const login = (username, password) =>
   http.post(
     `https://qatools.ro/api/login.php?username=${username}&password=${password}`,
   );
 
-const getCars = accessToken =>
-  http.get(`https://qatools.ro/api/cars`, {
+const getCars = accessToken => {
+  const urlEnv =
+    __ENV.environment === 'production' ? '' : `${__ENV.environment}/`;
+  return http.get(`https://qatools.ro/api/${urlEnv}cars`, {
     headers: { 'Access-Token': accessToken },
   });
+};
 
 const validateLogin = loginResponse => {
   if (!isResponseValid(loginResponse, { status: 'authorized' })) {
@@ -66,7 +70,7 @@ export const options = {
 };
 
 export function setup() {
-  const loginResponse = login('tester', 'passw0rd');
+  const loginResponse = login(__ENV.username, __ENV.password);
   totalRequests.add(1);
   validateLogin(loginResponse);
 
