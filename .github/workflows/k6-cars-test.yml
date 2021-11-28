@@ -2,7 +2,7 @@ name: k6 CARS test
 
 on:
   workflow_dispatch:
-    ref: refs/heads/main
+    #ref: refs/heads/main
     inputs:
       environment:
         description: test environment
