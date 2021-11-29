@@ -5,7 +5,7 @@ import { Trend } from 'k6/metrics';
 
 import defaultReport from '../reporters/defaultReport.js';
 
-import { expect } from 'chai/chai';
+import { expect } from '../node_modules/chai/chai.js';
 import chaiCheck from '../util/chaiCheck.js';
 
 const testEnvironment = __ENV.environment;
