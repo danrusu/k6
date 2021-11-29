@@ -24,7 +24,7 @@ on:
         description: test environment
         required: true
         options:
-          - 'alpha'
+          - 'staging'
           - 'production'
 jobs:
   performance_test:
