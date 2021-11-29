@@ -1,9 +1,16 @@
-name: k6 CARS test
+name: k6 performance test
 
 on:
   workflow_dispatch:
     #ref: refs/heads/main
     inputs:
+      test:
+        type: choice
+        description: test name
+        required: true
+        options:
+          - 'loginTest'
+          - 'carsTest'
       environment:
         type: choice
         description: test environment
@@ -13,7 +20,7 @@ on:
           - 'production'
 jobs:
   k6_cars_test:
-    name: k6 CARS test [${{ github.event.inputs.environment }}]
+    name: k6 ${{ github.event.inputs.test }} [${{ github.event.inputs.environment }}]
     runs-on: macos-latest
 
     steps:
@@ -26,18 +33,18 @@ jobs:
       - name: Install Node.js dependencies
         run: npm install
 
-      - name: k6 LOGIN test
+      - name: k6 ${{ github.event.inputs.test }}
         env:
           environment: ${{ github.event.inputs.environment }}
           username: ${{ secrets.username }}
           password: ${{ secrets.password }}
         run: |
           echo "Running k6 performance tests against: ${{ github.event.inputs.environment }}"
-          k6 run ./test/carsTest.js
+          k6 run ./test/${{ github.event.inputs.test }}.js
 
       - name: Publish HTML report
         uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: CARS.performace.${{ github.event.inputs.environment }}.report
-          path: reports/CARS.html
+          name: ${{ github.event.inputs.test }}.performace.${{ github.event.inputs.environment }}.report
+          path: reports/${{ github.event.inputs.test }}.html

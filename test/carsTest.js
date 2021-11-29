@@ -11,7 +11,7 @@ import chaiCheck from '../util/chaiCheck.js';
 
 const testEnvironment = __ENV.environment;
 
-const TEST_NAME = 'CARS';
+const TEST_NAME = 'carsTest';
 const EXPECTED_CARS = ['Ford Fiesta', 'BMW X5', 'Porsche 911', 'Lamborghini'];
 
 // Custom Metrics
@@ -86,8 +86,6 @@ export default function (accessToken) {
     totalRequests.add(1);
 
     validateCars(carsResponse);
-
-    // logResponse(carsResponse);
   });
 
   sleep(1);

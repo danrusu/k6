@@ -10,7 +10,7 @@ import chaiCheck from '../util/chaiCheck.js';
 
 const testEnvironment = __ENV.environment;
 
-const TEST_NAME = 'LOGIN';
+const TEST_NAME = 'loginTest';
 
 // Custom Metrics
 // Time To First Byte
