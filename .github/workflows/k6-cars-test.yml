@@ -5,9 +5,12 @@ on:
     #ref: refs/heads/main
     inputs:
       environment:
+        type: choice
         description: test environment
         required: true
-        default: production
+        options:
+          - 'alpha'
+          - 'production'
 jobs:
   k6_cars_test:
     name: k6 CARS test [${{ github.event.inputs.environment }}]
