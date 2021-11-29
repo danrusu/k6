@@ -11,6 +11,14 @@ on:
         options:
           - 'loginTest'
           - 'carsTest'
+      users:
+        type: choice
+        description: virtual users
+        required: true
+        options:
+          - '1'
+          - '10'
+          - '100'
       environment:
         type: choice
         description: test environment
@@ -19,8 +27,8 @@ on:
           - 'alpha'
           - 'production'
 jobs:
-  k6_cars_test:
-    name: k6 ${{ github.event.inputs.test }} [${{ github.event.inputs.environment }}]
+  performance_test:
+    name: Performance ${{ github.event.inputs.test }} [${{ github.event.inputs.users }} users] [${{ github.event.inputs.environment }}]
     runs-on: macos-latest
 
     steps:
@@ -40,11 +48,11 @@ jobs:
           password: ${{ secrets.password }}
         run: |
           echo "Running k6 performance tests against: ${{ github.event.inputs.environment }}"
-          k6 run ./test/${{ github.event.inputs.test }}.js
+          k6 run ./test/${{ github.event.inputs.test }}.js -u ${{ github.event.inputs.users }} -i ${{ github.event.inputs.users }}
 
       - name: Publish HTML report
         uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: ${{ github.event.inputs.test }}.performace.${{ github.event.inputs.environment }}.report
+          name: ${{ github.event.inputs.test }}.performace.${{ github.event.inputs.users }}.${{ github.event.inputs.environment }}.report
           path: reports/${{ github.event.inputs.test }}.html
