@@ -38,6 +38,9 @@ jobs:
       - name: Install k6 by homebrew
         run: brew install k6
 
+      - name: Install Node.js dependencies
+        run: npm install chai dotenv
+
       - name: k6 ${{ github.event.inputs.test }}
         env:
           environment: ${{ github.event.inputs.environment }}
