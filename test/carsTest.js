@@ -4,9 +4,10 @@ import { check, fail, group, sleep } from 'k6';
 import { Trend, Counter } from 'k6/metrics';
 
 import defaultReport from '../reporters/defaultReport.js';
+import chaiCheck from '../util/chaiCheck.js';
+import defaultOptions from '../util/defaultOptions.js';
 
 import { expect } from '../node_modules/chai/chai.js';
-import chaiCheck from '../util/chaiCheck.js';
 //import { expect } from 'https://www.chaijs.com/chai.js';
 
 const testEnvironment = __ENV.environment;
@@ -63,11 +64,7 @@ const validateCars = carsResponse => {
 
 //***** k6 EXPORTS *****
 
-export const options = {
-  //httpDebug: 'full',
-  vus: 10,
-  iterations: 10,
-};
+export const options = defaultOptions;
 
 export function setup() {
   const loginResponse = login(__ENV.username, __ENV.password);

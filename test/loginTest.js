@@ -4,9 +4,10 @@ import { check, fail } from 'k6';
 import { Trend } from 'k6/metrics';
 
 import defaultReport from '../reporters/defaultReport.js';
+import chaiCheck from '../util/chaiCheck.js';
+import defaultOptions from '../util/defaultOptions.js';
 
 import { expect } from '../node_modules/chai/chai.js';
-import chaiCheck from '../util/chaiCheck.js';
 
 const testEnvironment = __ENV.environment;
 
@@ -45,13 +46,9 @@ const validateLogin = loginResponse => {
 
 //***** k6 EXPORTS *****
 
-export const options = {
-  //httpDebug: 'full',
-  vus: 10,
-  iterations: 10,
-};
+export const options = defaultOptions;
 
-export default function (accessToken) {
+export default function () {
   // 3. VU code
   const loginResponse = login(__ENV.username, __ENV.password);
   ttfbCarsTrend.add(loginResponse.timings.waiting);
