@@ -26,6 +26,10 @@ on:
         options:
           - 'staging'
           - 'production'
+      X_PLMI: 
+        description: secret
+        required: true
+        default: 'x-plmi'
 jobs:
   performance_test:
     name: Performance ${{ github.event.inputs.test }} [${{ github.event.inputs.users }} users] [${{ github.event.inputs.environment }}]
@@ -46,7 +50,9 @@ jobs:
           environment: ${{ github.event.inputs.environment }}
           username: ${{ secrets.username }}
           password: ${{ secrets.password }}
+          X_PLMI: ${{secrets[github.event.inputs.X_PLMI]}}
         run: |
+          echo ${X_PLMI}
           echo "Running k6 performance tests against: ${{ github.event.inputs.environment }}"
           k6 run ./test/${{ github.event.inputs.test }}.js -u ${{ github.event.inputs.users }} -i ${{ github.event.inputs.users }}
 
